@@ -24,7 +24,7 @@
 
 package com.github.plateofpasta.edgestitch.world
 
-import com.github.plateofpasta.edgestitch.block.FabricBlock
+import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
 import com.github.plateofpasta.edgestitch.chunk.ChunkUtil
 import net.minecraft.util.Nameable
 import net.minecraft.util.math.BlockPos
@@ -34,7 +34,7 @@ import net.minecraft.world.Heightmap
 import net.minecraft.world.World
 
 /** Abstracts Minecraft primitive [World]. */
-open class FabricWorld(protected val impl: World) {
+open class EdgestitchWorld(protected val impl: World) {
   val maxY: Int
     // todo Maybe refactor if dimensional roofs matter (e.g. nether). For example
     // return this.world.getDimension().hasCeiling() ? 128 : 256;
@@ -46,8 +46,8 @@ open class FabricWorld(protected val impl: World) {
    * @param blockPos Position of the target block.
    * @return Target block.
    */
-  fun getBlock(blockPos: BlockPos?): FabricBlock {
-    return FabricBlock(impl.getBlockState(blockPos))
+  fun getBlock(blockPos: BlockPos?): EdgestitchBlock {
+    return EdgestitchBlock(impl.getBlockState(blockPos))
   }
 
   /**
@@ -56,8 +56,8 @@ open class FabricWorld(protected val impl: World) {
    * @param blockVec3D 3D vector position.
    * @return Target block.
    */
-  fun getBlock(blockVec3D: Vec3d?): FabricBlock {
-    return FabricBlock(impl.getBlockState(BlockPos(blockVec3D)))
+  fun getBlock(blockVec3D: Vec3d?): EdgestitchBlock {
+    return EdgestitchBlock(impl.getBlockState(BlockPos(blockVec3D)))
   }
 
   /**
@@ -98,7 +98,7 @@ open class FabricWorld(protected val impl: World) {
    * @param location Location in a chunk to get the highest Y-coordinate.
    * @return Highest Y-coordinate.
    */
-  fun getHighestY(location: FabricLocation): Int {
+  fun getHighestY(location: EdgestitchLocation): Int {
     return this.getHighestY(location.x, location.z)
   }
 

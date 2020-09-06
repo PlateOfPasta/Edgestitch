@@ -24,24 +24,13 @@
 
 package com.github.plateofpasta.edgestitch.block
 
-import net.minecraft.block.Material
+import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 
-/** Abstracts Minecraft primitive [Material]. */
-open class FabricMaterial constructor(protected val material: Material) {
-  val isLiquid: Boolean
-    get() = material.isLiquid
-  val isSolid: Boolean
-    get() = material.isSolid
-  val canblockMovement: Boolean
-    get() = material.blocksMovement()
-  val isBurnable: Boolean
-    get() = material.isBurnable
-  val isReplaceable: Boolean
-    get() = material.isReplaceable
-  val canblockLight: Boolean
-    get() = material.blocksLight()
-  val isAir: Boolean
-    get() = material == Material.AIR
-  val isPlant: Boolean
-    get() = material == Material.PLANT
+/** Abstracts Minecraft primitive [BlockState]. */
+open class EdgestitchBlock(protected val block: BlockState) {
+  val material: EdgestitchMaterial
+    get() = EdgestitchMaterial(block.material)
+  val blockStateVarInt: Int
+    get() = Block.getRawIdFromState(block)
 }

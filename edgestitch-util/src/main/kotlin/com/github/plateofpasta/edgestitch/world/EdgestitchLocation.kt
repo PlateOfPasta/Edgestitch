@@ -24,13 +24,13 @@
 
 package com.github.plateofpasta.edgestitch.world
 
-import com.github.plateofpasta.edgestitch.block.FabricBlock
+import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 
 /** Abstracts Minecraft primitives [World] and [BlockPos]. */
-open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
+open class EdgestitchLocation(val world: EdgestitchWorld, val blockPos: BlockPos) {
   val chunkX: Int
     get() = world.getBlockChunkX(blockPos)
   val chunkZ: Int
@@ -41,7 +41,7 @@ open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
     get() = blockPos.y
   val z: Int
     get() = blockPos.z
-  val block: FabricBlock
+  val block: EdgestitchBlock
     get() = world.getBlock(blockPos)
 
   /**
@@ -52,7 +52,7 @@ open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
    * @param y Y-coordinate.
    * @param z Z-coordinate.
    */
-  constructor(world: FabricWorld, x: Int, y: Int, z: Int) : this(world, BlockPos(x, y, z))
+  constructor(world: EdgestitchWorld, x: Int, y: Int, z: Int) : this(world, BlockPos(x, y, z))
 
   /**
    * 3D vector based constructor.
@@ -60,14 +60,14 @@ open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
    * @param world Location world.
    * @param coord3D 3D vector of location.
    */
-  constructor(world: FabricWorld, coord3D: Vec3d?) : this(world, BlockPos(coord3D))
+  constructor(world: EdgestitchWorld, coord3D: Vec3d?) : this(world, BlockPos(coord3D))
 
   /**
    * Constructor that uses minecraft primitives.
    * @param world Location world.
    * @param blockPos Location position.
    */
-  constructor(world: World, blockPos: BlockPos) : this(FabricWorld(world), blockPos)
+  constructor(world: World, blockPos: BlockPos) : this(EdgestitchWorld(world), blockPos)
 
   /**
    * Checks if the position of the given location is equivalent to this location.
@@ -75,7 +75,7 @@ open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
    * @param other Location to compare against.
    * @return `true` if this and other have equivalent positions in the world, else `false`.
    */
-  fun equalsPosition(other: FabricLocation): Boolean {
+  fun equalsPosition(other: EdgestitchLocation): Boolean {
     return blockPos == other.blockPos
   }
 
@@ -87,7 +87,7 @@ open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
    * @throws IllegalArgumentException Throws if the locations have different worlds.
    */
   @Throws(IllegalArgumentException::class)
-  fun distance(other: FabricLocation): Double {
+  fun distance(other: EdgestitchLocation): Double {
     return Math.sqrt(distanceSquared(other))
   }
 
@@ -99,7 +99,7 @@ open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
    * @throws IllegalArgumentException Throws if the locations have different worlds.
    */
   @Throws(IllegalArgumentException::class)
-  fun distanceSquared(other: FabricLocation): Double {
+  fun distanceSquared(other: EdgestitchLocation): Double {
     require(world == other.world) { "Locations do not share the same world" }
     return blockPos.getSquaredDistance(other.blockPos)
   }
@@ -112,7 +112,7 @@ open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
    * @return Distance between this location and other.
    * @throws IllegalArgumentException Throws if the locations have different worlds.
    */
-  fun distanceUnsafe(other: FabricLocation): Double {
+  fun distanceUnsafe(other: EdgestitchLocation): Double {
     return Math.sqrt(distanceSquaredUnsafe(other))
   }
 
@@ -124,7 +124,7 @@ open class FabricLocation(val world: FabricWorld, val blockPos: BlockPos) {
    * @return Square distance between this location and other.
    * @throws RuntimeException Throws if the locations have different worlds.
    */
-  fun distanceSquaredUnsafe(other: FabricLocation): Double {
+  fun distanceSquaredUnsafe(other: EdgestitchLocation): Double {
     return blockPos.getSquaredDistance(other.blockPos)
   }
 }

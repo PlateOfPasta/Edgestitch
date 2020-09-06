@@ -44,26 +44,6 @@ import java.util.concurrent.TimeoutException;
 /** Class for chunk utility functions. */
 public class ChunkUtil {
   /**
-   * Chunk regeneration requires a 17x17 list of chunks for certain generation steps. The center
-   * chunk is the generation target.
-   *
-   * @param center Position of the chunk that is the generation target.
-   * @return List of minecraft Chunks required for chunk regeneration.
-   */
-  private static List<net.minecraft.world.chunk.Chunk> populateBaseChunkList(ChunkPos center) {
-    ArrayList<Chunk> chunkList = new ArrayList<>(17 * 17);
-    int j = center.x;
-    int k = center.z;
-
-    for (int n = j - 8; n <= j + 8; ++n) {
-      for (int o = k - 8; o <= k + 8; ++o) {
-        chunkList.add(new ProtoChunk(new ChunkPos(n, o), UpgradeData.NO_UPGRADE_DATA));
-      }
-    }
-    return chunkList;
-  }
-
-  /**
    * Regenerates the given chunk in this world.
    *
    * @param chunk Chunk to regenerate.
@@ -76,6 +56,26 @@ public class ChunkUtil {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Chunk regeneration requires a 17x17 list of chunks for certain generation steps. The center
+   * chunk is the generation target.
+   *
+   * @param center Position of the chunk that is the generation target.
+   * @return List of minecraft Chunks required for chunk regeneration.
+   */
+  private static List<Chunk> populateBaseChunkList(ChunkPos center) {
+    ArrayList<Chunk> chunkList = new ArrayList<>(17 * 17);
+    int j = center.x;
+    int k = center.z;
+
+    for (int n = j - 8; n <= j + 8; ++n) {
+      for (int o = k - 8; o <= k + 8; ++o) {
+        chunkList.add(new ProtoChunk(new ChunkPos(n, o), UpgradeData.NO_UPGRADE_DATA));
+      }
+    }
+    return chunkList;
   }
 
   /**

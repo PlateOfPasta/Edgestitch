@@ -24,9 +24,9 @@
 
 package com.github.plateofpasta.edgestitch.player
 
-import com.github.plateofpasta.edgestitch.block.FabricBlock
-import com.github.plateofpasta.edgestitch.world.FabricLocation
-import com.github.plateofpasta.edgestitch.world.FabricWorld
+import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
+import com.github.plateofpasta.edgestitch.world.EdgestitchLocation
+import com.github.plateofpasta.edgestitch.world.EdgestitchWorld
 import io.netty.buffer.Unpooled
 import java.io.IOException
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry
@@ -41,13 +41,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 
 /** Abstracts Minecraft primitive [PlayerEntity]. */
-open class FabricPlayer(protected val player: PlayerEntity) {
+open class EdgestitchPlayer(protected val player: PlayerEntity) {
   val name: String
     get() = player.name.asString()
-  val world: FabricWorld
-    get() = FabricWorld(player.entityWorld)
-  val location: FabricLocation
-    get() = FabricLocation(player.entityWorld, player.blockPos)
+  val world: EdgestitchWorld
+    get() = EdgestitchWorld(player.entityWorld)
+  val location: EdgestitchLocation
+    get() = EdgestitchLocation(player.entityWorld, player.blockPos)
   val isInsideVehicle: Boolean
     get() = player.hasVehicle()
 
@@ -97,7 +97,7 @@ open class FabricPlayer(protected val player: PlayerEntity) {
    *
    * @param location Location to teleport to.
    */
-  fun teleport(location: FabricLocation) {
+  fun teleport(location: EdgestitchLocation) {
     player.teleport(location.x.toDouble(), location.y.toDouble(), location.z.toDouble())
   }
 
@@ -107,7 +107,7 @@ open class FabricPlayer(protected val player: PlayerEntity) {
    * @param block What the fake block should look like.
    * @param coord3D Position in the player's current world to change.
    */
-  fun sendFakeBlock(block: FabricBlock, coord3D: Vec3d?) {
+  fun sendFakeBlock(block: EdgestitchBlock, coord3D: Vec3d?) {
     // Construct the packet with a buffer so we can specific the block state at the location.
     val packet = BlockUpdateS2CPacket()
     val packetBuf = PacketByteBuf(Unpooled.buffer())
