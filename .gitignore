@@ -40,3 +40,6 @@ run/
 
 # VSCode stuff
 .vscode/
+
+# Secrets
+*.config.properties
