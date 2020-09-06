@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "edgestitch",
+  "version": "${version}",
+  "name": "Edgestitch",
+  "description": "Edgestitch is a Fabric-based mod API",
+  "authors": [
+    "PlateOfPasta"
+  ],
+  "contact": {
+    "sources": "https://github.com/PlateOfPasta/Edgestitch"
+  },
+  "license": "MIT",
+  "environment": "*"
+}

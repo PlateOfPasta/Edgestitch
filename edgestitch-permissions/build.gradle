@@ -1,0 +1,10 @@
+apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
+
+dependencies {
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${rootProject.cardinal_version}"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${rootProject.cardinal_version}"
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${rootProject.cardinal_version}"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${rootProject.cardinal_version}"
+    modImplementation "com.lettuce.fudge:fabric-drawer:${rootProject.fabric_drawer_version}"
+    include "com.lettuce.fudge:fabric-drawer:${rootProject.fabric_drawer_version}"
+}

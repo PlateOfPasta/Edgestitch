@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "edgestitch-util",
+  "version": "${version}",
+  "name": "Edgestitch Utilities",
+  "description": "Edgestitch Utilities is a utility library for dedicated server Fabric mods",
+  "authors": [
+    "PlateOfPasta"
+  ],
+  "contact": {
+    "sources": "https://github.com/PlateOfPasta/Edgestitch"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+  },
+  "mixins": [
+    "edgestitch-util.mixins.json"
+  ],
+  "depends": {
+  }
+}

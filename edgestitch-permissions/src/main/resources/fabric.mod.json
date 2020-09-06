@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "edgestitch-permissions",
+  "version": "${version}",
+  "name": "Edgestitch Permissions",
+  "description": "Edgestitch Permissions is a permissions mod for Minecraft dedicated servers built with the Fabric API",
+  "authors": [
+    "PlateOfPasta"
+  ],
+  "contact": {
+    "sources": "https://github.com/PlateOfPasta/Edgestitch"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "com.github.plateofpasta.edgestitch.EdgestitchPermissions::init"
+    ],
+    "cardinal-components-entity": [
+      "com.github.plateofpasta.edgestitch.component.ComponentStaticRegistry"
+    ]
+  },
+  "mixins": [
+    "edgestitch-permissions.mixins.json"
+  ],
+  "depends": {
+    "fabric-command-api-v1": "*",
+    "cardinal-components-base": "*",
+    "cardinal-components-entity": "*"
+  },
+  "custom": {
+    "edgestitch-permissions": {
+      "operator": {
+        "description": "Allows the player to operate edgestitch commands.",
+        "default": 4
+      }
+    },
+    "cardinal-components": [
+      "edgestitch:permissions"
+    ]
+  }
+}

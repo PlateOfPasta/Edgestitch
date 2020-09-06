@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "package": "com.github.plateofpasta.edgestitch.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinAccessorProjectileEntity",
+    "MixinBaseFluid",
+    "MixinPistonBlock",
+    "MixinProjectileEntity",
+    "MixinThrownEntity"
+  ],
+  "server": [
+    "MixinPlayerManager",
+    "MixinServerPlayerEntity",
+    "MixinServerWorld"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

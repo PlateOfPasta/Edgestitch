@@ -1,0 +1,156 @@
+import net.fabricmc.loom.task.RemapJarTask
+
+import java.nio.charset.StandardCharsets
+import java.time.Year
+
+plugins {
+    id 'fabric-loom'
+    id 'maven-publish'
+    id "org.jetbrains.kotlin.jvm"
+    id "org.jetbrains.kotlin.plugin.serialization"
+    id "net.minecrell.licenser"
+    id "java-library"
+}
+
+group = rootProject.maven_group
+archivesBaseName = rootProject.archives_base_name
+
+subprojects {
+    apply plugin: 'fabric-loom'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'net.minecrell.licenser'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java-library'
+
+    archivesBaseName = project.name
+    group = "${rootProject.group}.${rootProject.archivesBaseName}"
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                afterEvaluate {
+                    artifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")) {
+                        builtBy remapJar
+                    }
+                }
+                if (project.tasks.findByName('sourcesJar')) {
+                    artifact(project.tasks.getByName('sourcesJar')) {
+                        builtBy project.tasks.getByName('remapSourcesJar')
+                    }
+                }
+            }
+        }
+    }
+}
+
+allprojects {
+    apply plugin: "fabric-loom"
+
+    version = rootProject.mod_version
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    compileKotlin.kotlinOptions.jvmTarget = "1.8"
+
+    repositories {
+        jcenter()
+        maven {
+            name = "Ladysnake Libs"
+            url = 'https://dl.bintray.com/ladysnake/libs'
+        }
+        maven {
+            name = "FabricMC"
+            url = "https://maven.fabricmc.net"
+        }
+    }
+
+    dependencies {
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${rootProject.kotlin_version}"
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        mappings "net.fabricmc:yarn:${rootProject.yarn_mappings}:v2"
+        modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+        modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_version}"
+        modImplementation "net.fabricmc:fabric-language-kotlin:$project.fabric_language_kotlin"
+    }
+
+    // Set version in fabric.mod.json
+    processResources {
+        inputs.property "version", project.version
+
+        from(sourceSets.main.resources.srcDirs) {
+            include "fabric.mod.json"
+            expand "version": project.version
+        }
+
+        from(sourceSets.main.resources.srcDirs) {
+            exclude "fabric.mod.json"
+        }
+    }
+
+    // Licenser configurations.
+    license {
+        header = rootProject.file("license_headers/${rootProject.license_type}_HEADER")
+        include '**/*.java'
+        include '**/*.kt'
+        style.java = 'BLOCK_COMMENT'
+        style.kt = 'BLOCK_COMMENT'
+        charset = StandardCharsets.UTF_8.name()
+        ext {
+            year = Year.now()
+            projectDisplayName = rootProject.archivesBaseName
+        }
+    }
+    
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        from sourceSets.main.allSource
+        classifier = "sources"
+    }
+
+    build.dependsOn(remapJar, sourcesJar, remapSourcesJar)
+    rootProject.publish.dependsOn(remapJar, sourcesJar, remapSourcesJar)
+}
+
+
+// Helper for formatting all subproject's license.
+task licenseFormatAll
+subprojects { p -> 
+    licenseFormatAll.dependsOn("${p.path}:licenseFormat") 
+}
+
+// Make base project's remapJar depend on the subproject's remapJar.
+subprojects.each { 
+    remapJar.dependsOn("${it.path}:remapJar") 
+}
+
+// Disable since the base project doesn't have sources.
+sourcesJar.enabled = false
+remapSourcesJar.enabled = false
+
+dependencies {
+    afterEvaluate {
+        subprojects.each {
+            api it
+            include it
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")) {
+                builtBy(remapJar)
+            }
+            pom.withXml {
+                def depsNode = asNode().appendNode("dependencies")
+                subprojects.each {
+                    def depNode = depsNode.appendNode("dependency")
+                    depNode.appendNode("groupId", it.group)
+                    depNode.appendNode("artifactId", it.name)
+                    depNode.appendNode("version", it.version)
+                    depNode.appendNode("scope", "compile")
+                }
+            }
+        }
+    }
+}
+tasks.publish.dependsOn build

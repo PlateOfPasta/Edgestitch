@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "edgestitch-events",
+  "version": "${version}",
+  "name": "Edgestitch Events",
+  "description": "Edgestitch Events is a Fabric events library",
+  "authors": [
+    "PlateOfPasta"
+  ],
+  "contact": {
+    "sources": "https://github.com/PlateOfPasta/Edgestitch"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+  },
+  "mixins": [
+    "edgestitch-events.mixins.json"
+  ],
+  "depends": {
+    "fabric-api-base": "*"
+  }
+}

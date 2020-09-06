@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.github.plateofpasta.edgestitch.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "server": [
+    "MixinAccessorServerChunkManager",
+    "MixinAccessorTACS",
+    "MixinWorld"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

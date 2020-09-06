@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        gradlePluginPortal()
+    }
+
+    plugins {
+        id 'fabric-loom' version loom_version
+        id "org.jetbrains.kotlin.jvm" version kotlin_version
+        id "org.jetbrains.kotlin.plugin.serialization" version kotlin_version
+        id 'net.minecrell.licenser' version licenser_version
+    }
+}
+rootProject.name = 'Edgestitch'
+include 'edgestitch-permissions'
+include 'edgestitch-events'
+include 'edgestitch-util'
