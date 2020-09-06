@@ -13,6 +13,7 @@ pluginManagement {
         id "org.jetbrains.kotlin.jvm" version kotlin_version
         id "org.jetbrains.kotlin.plugin.serialization" version kotlin_version
         id 'net.minecrell.licenser' version licenser_version
+        id 'com.jfrog.bintray' version bintray_version
     }
 }
 rootProject.name = 'Edgestitch'

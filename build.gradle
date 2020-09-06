@@ -6,10 +6,11 @@ import java.time.Year
 plugins {
     id 'fabric-loom'
     id 'maven-publish'
-    id "org.jetbrains.kotlin.jvm"
-    id "org.jetbrains.kotlin.plugin.serialization"
-    id "net.minecrell.licenser"
-    id "java-library"
+    id 'org.jetbrains.kotlin.jvm'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'net.minecrell.licenser'
+    id 'java-library'
+    id 'com.jfrog.bintray'
 }
 
 group = rootProject.maven_group
@@ -21,13 +22,14 @@ subprojects {
     apply plugin: 'net.minecrell.licenser'
     apply plugin: 'maven-publish'
     apply plugin: 'java-library'
+    apply plugin: 'com.jfrog.bintray'
 
     archivesBaseName = project.name
     group = "${rootProject.group}.${rootProject.archivesBaseName}"
 
     publishing {
         publications {
-            mavenJava(MavenPublication) {
+            create("${archivesBaseName}_mavenJava", MavenPublication) {
                 afterEvaluate {
                     artifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")) {
                         builtBy remapJar
@@ -37,6 +39,26 @@ subprojects {
                     artifact(project.tasks.getByName('sourcesJar')) {
                         builtBy project.tasks.getByName('remapSourcesJar')
                     }
+                }
+            }
+        }
+    }
+
+    bintray {
+        user = rootProject.property('bintray_user')
+        key = rootProject.property('bintray_api_key')
+        publications = ["${archivesBaseName}_mavenJava"]
+        publish = true
+        pkg {
+            repo = "Edgestitch"
+            name = archivesBaseName
+            licenses = ["${rootProject.license_type}"]
+            websiteUrl = 'https://github.com/PlateOfPasta/Edgestitch'
+            issueTrackerUrl = 'https://github.com/PlateOfPasta/Edgestitch/issues'
+            vcsUrl = 'https://github.com/PlateOfPasta/Edgestitch.git'
+            version {
+                gpg {
+                    sign = true
                 }
             }
         }
@@ -130,6 +152,26 @@ dependencies {
         subprojects.each {
             api it
             include it
+        }
+    }
+}
+
+bintray {
+    user = rootProject.property('bintray_user')
+    key = rootProject.property('bintray_api_key')
+    publications = ["mavenJava"]
+    publish = true
+    pkg {
+        repo = "Edgestitch"
+        name = archivesBaseName
+        licenses = ["${rootProject.license_type}"]
+        websiteUrl = 'https://github.com/PlateOfPasta/Edgestitch'
+        issueTrackerUrl = 'https://github.com/PlateOfPasta/Edgestitch/issues'
+        vcsUrl = 'https://github.com/PlateOfPasta/Edgestitch.git'
+        version {
+            gpg {
+                sign = true
+            }
         }
     }
 }
