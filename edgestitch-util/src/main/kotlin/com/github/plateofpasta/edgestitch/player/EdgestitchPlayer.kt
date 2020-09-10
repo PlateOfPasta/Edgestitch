@@ -122,16 +122,4 @@ open class EdgestitchPlayer(protected val player: PlayerEntity) {
     // Fabric network API.
     ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, packet)
   }
-
-  companion object {
-    /**
-     * Gets the name of the player.
-     *
-     * @param playerEntity Player entity (same type required by FabricPlayer constructor).
-     * @return String name.
-     */
-    fun getName(playerEntity: PlayerEntity): String {
-      return playerEntity.name.asString()
-    }
-  }
 }
