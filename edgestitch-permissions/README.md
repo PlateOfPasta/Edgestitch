@@ -26,7 +26,7 @@ Let's break this down:
 - `"operator": { }"` defines a single permission named "operator". Inside, it has:
   - `"description"` - a brief description for the permission.
   - `"required_assign_op"` - **IMPORTANT**: the op level (0-4) required to **assign** this
-  permission to a player. This does **NOT** define the op level required have or "use" the 
+  permission to a player. This does **NOT** define the op level required to possess the 
   permission.
     - In this example, only server players who are op level 4 can **assign** this permission to 
     other players. Once assigned, the target player has access to anything associated with this 
@@ -84,6 +84,9 @@ Brigadier commands associated with this mod:
     - The permission does **NOT** have to be active. However, it must exist in the player's 
     data file.
   - Example usage: `/edgestitch remove Notch edgestitch-permissions.operator`
+- `/edgestitch describe <fully qualified permission>`
+  - Prints the description and required assign op level for the given permission.
+  - Example usage: `/edgestitch describe edgestitch-permissions.operator`
 
 All of these commands require the `edgestitch-permissions.operator` permission to use. If you are
 starting a server for the first time, you will need to perform:
