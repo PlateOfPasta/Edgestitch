@@ -25,6 +25,7 @@
 package com.github.plateofpasta.edgestitch
 
 import com.github.plateofpasta.edgestitch.command.initCommands
+import com.github.plateofpasta.edgestitch.permission.MutablePermissionMap
 import com.github.plateofpasta.edgestitch.permission.PermissionMap
 import com.github.plateofpasta.edgestitch.permission.PermissionParser
 import net.fabricmc.loader.api.FabricLoader

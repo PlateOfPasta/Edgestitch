@@ -26,22 +26,21 @@ package com.github.plateofpasta.edgestitch.mixin;
 
 import com.github.plateofpasta.edgestitch.EdgestitchPermissions;
 import com.github.plateofpasta.edgestitch.component.EdgestitchPermissionsComponent;
+import com.github.plateofpasta.edgestitch.permission.MutablePermissionMap;
 import com.github.plateofpasta.edgestitch.permission.Permissible;
 import com.github.plateofpasta.edgestitch.permission.Permission;
-import com.github.plateofpasta.edgestitch.permission.PermissionMap;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.Collection;
-import java.util.List;
 
 /** Implements [Permissible] for a [ServerPlayerEntity]. */
 @Mixin(ServerPlayerEntity.class)
 public abstract class MixinPermissibleServerPlayerEntity implements Permissible {
 
   /** @return Permission map of this entity. */
-  public PermissionMap getPermissionMap() {
+  public MutablePermissionMap getPermissionMap() {
     return EdgestitchPermissionsComponent.Companion.get(this).getPermissionMap();
   }
 

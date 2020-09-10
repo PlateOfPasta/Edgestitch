@@ -1,35 +1,10 @@
-/*
- * MIT License
- *
- * Copyright (c) 2020-2020 PlateOfPasta
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 package com.github.plateofpasta.edgestitch.permission
 
 import java.util.*
 
-/** Class for handling collections of [Permission]. */
-class PermissionMap {
-  private val permissions: MutableMap<String, Permission> = HashMap()
-  private val modPermissions: MutableMap<String, MutableSet<Permission>> = HashMap()
+open class PermissionMap {
+  protected val permissions: MutableMap<String, Permission> = HashMap()
+  protected val modPermissions: MutableMap<String, MutableSet<Permission>> = HashMap()
 
   /** Explicit default constructor that handles the constructor of internal collections. */
   constructor()
@@ -40,7 +15,7 @@ class PermissionMap {
    */
   constructor(permissionList: Collection<Permission>) {
     for (permission in permissionList) {
-      this.add(permission)
+      this.addInternal(permission)
     }
   }
 
@@ -50,7 +25,7 @@ class PermissionMap {
    */
   constructor(permissionParser: PermissionParser) {
     for ((_, permission) in permissionParser.getPermissions().entries) {
-      this.add(permission)
+      this.addInternal(permission)
     }
   }
 
@@ -71,22 +46,10 @@ class PermissionMap {
    * @param permission Permission to add.
    * @return `true` the permission was added, else `false`.
    */
-  fun add(permission: Permission): Boolean {
+  protected fun addInternal(permission: Permission): Boolean {
     val copiedPerm = permission.copy()
     permissions[permission.qualifiedName] = copiedPerm
     return modPermissions.computeIfAbsent(copiedPerm.modID) { TreeSet() }.add(copiedPerm)
-  }
-
-  /**
-   * Removes a permission by its qualified name.
-   *
-   * @param qualifiedName Fully qualified name of a permission.
-   * @return `true` the permission was removed, else `false`.
-   */
-  fun remove(qualifiedName: String?): Boolean {
-    val perm = permissions.remove(qualifiedName) ?: return false
-    val modPermissionSet = modPermissions[perm.modID] ?: return false
-    return modPermissionSet.remove(perm)
   }
 
   /**
@@ -106,16 +69,6 @@ class PermissionMap {
    */
   val all: Collection<Permission>
     get() = permissions.values
-
-  /**
-   * Add permissions by its qualified name.
-   *
-   * @param modID Mod ID of a loaded fabric mod.
-   * @param permissions Permissions to add to this map.
-   */
-  fun addAllByMod(modID: String, permissions: Collection<Permission>) {
-    modPermissions.computeIfAbsent(modID) { TreeSet() }.addAll(permissions)
-  }
 
   /**
    * Gets all permissions associated with a mod ID.

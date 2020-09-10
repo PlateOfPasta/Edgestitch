@@ -25,8 +25,8 @@
 package com.github.plateofpasta.edgestitch.component
 
 import com.github.plateofpasta.edgestitch.EdgestitchPermissions
+import com.github.plateofpasta.edgestitch.permission.MutablePermissionMap
 import com.github.plateofpasta.edgestitch.permission.Permission
-import com.github.plateofpasta.edgestitch.permission.PermissionMap
 import drawer.getFrom
 import drawer.put
 import kotlinx.serialization.list
@@ -35,7 +35,7 @@ import net.minecraft.nbt.CompoundTag
 
 /** Cardinal component implementation for Edgestitch permissions. */
 class EdgestitchPermissionsComponent : Component {
-  var permissionMap = PermissionMap()
+  var permissionMap = MutablePermissionMap()
 
   /**
    * Deserialize from a compound NBT tag into this component's permissions.
@@ -43,7 +43,7 @@ class EdgestitchPermissionsComponent : Component {
    */
   override fun fromTag(compoundTag: CompoundTag) {
     this.permissionMap =
-        PermissionMap(Permission.serializer().list.getFrom(compoundTag, PERMISSION_TAG_KEY))
+        MutablePermissionMap(Permission.serializer().list.getFrom(compoundTag, PERMISSION_TAG_KEY))
   }
 
   /**
