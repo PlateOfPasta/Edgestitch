@@ -49,12 +49,4 @@ interface Permissible {
    * @param qualifiedName Fully qualified name of a permission from a loaded Fabric Mod.
    */
   fun removePermission(qualifiedName: String): Boolean
-
-  /**
-   * Load this object's list of permissions with the given list. Typically used for datastore
-   * operations.
-   *
-   * @param permissions List of permissions to load.
-   */
-  fun loadPermissions(permissions: List<Permission>)
 }

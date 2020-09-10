@@ -85,17 +85,4 @@ public abstract class MixinPermissibleServerPlayerEntity implements Permissible 
   public boolean removePermission(@NotNull String qualifiedName) {
     return getPermissionMap().remove(qualifiedName);
   }
-
-  /**
-   * Load this object's list of permissions with the given list. Typically used for datastore
-   * operations.
-   *
-   * @param permissions List of permissions to load.
-   */
-  @Override
-  public void loadPermissions(List<Permission> permissions) {
-    for (Permission perm : permissions) {
-      getPermissionMap().add(perm);
-    }
-  }
 }
