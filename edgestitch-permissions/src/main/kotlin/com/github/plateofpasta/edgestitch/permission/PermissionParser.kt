@@ -80,6 +80,6 @@ class PermissionParser {
 
   companion object {
     private const val SUBFIELD_1_NAME = "description"
-    private const val SUBFIELD_2_NAME = "default"
+    private const val SUBFIELD_2_NAME = "required_assign_op"
   }
 }
