@@ -79,7 +79,7 @@ public abstract class MixinPermissibleServerPlayerEntity implements Permissible 
    * Removes a permission associated with the qualified name from this.
    *
    * @param qualifiedName Fully qualified name of a permission from a loaded Fabric Mod.
-   * @return `true` if permission was successfully added.
+   * @return `true` if permission was successfully removed.
    */
   @Override
   public boolean removePermission(@NotNull String qualifiedName) {
