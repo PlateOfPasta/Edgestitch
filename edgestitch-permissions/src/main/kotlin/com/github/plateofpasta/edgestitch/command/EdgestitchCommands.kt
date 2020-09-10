@@ -30,6 +30,7 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback
 import net.minecraft.command.argument.EntityArgumentType
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.text.LiteralText
 
 const val EDGESTITCH_COMMANDS_NAMESPACE = "edgestitch"
 
@@ -66,6 +67,14 @@ fun initCommands() {
                       CommandManager.argument(
                               ListCommand.ARG0_NAMESPACE, EntityArgumentType.player())
                           .executes(ListCommand())))
+          // Describe command.
+          .then(
+              CommandManager.literal(Describe.NAMESPACE)
+                  .then(
+                      CommandManager.argument(Describe.ARG0_NAMESPACE, StringArgumentType.string())
+                          .suggests(PermissionSuggestions())
+                          .executes(Describe())))
+
   // Register commands.
   CommandRegistrationCallback.EVENT
       .register(
@@ -76,4 +85,12 @@ fun initCommands() {
               dispatcher.register(builder)
             }
           })
+}
+
+/**
+ * Helper function for sending a common command error message.
+ * @param source Source to send the message to.
+ */
+internal fun notFoundMessage(source: ServerCommandSource) {
+  source.sendError(LiteralText("Given permission was not found."))
 }

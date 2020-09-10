@@ -62,8 +62,7 @@ interface ModifyBase {
     }
     // Check if command is loaded.
     if (!EdgestitchPermissions.LOADED_PERMISSIONS.contains(qualifiedName)) {
-      source.sendError(
-          LiteralText(String.format("Given permission %s was not found.", qualifiedName)))
+      notFoundMessage(source)
       return -1
     }
     // Player saying the command must have the appropriate operator level to modify the permission
