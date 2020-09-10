@@ -51,7 +51,7 @@ class EdgestitchOpPredicate : Predicate<ServerCommandSource?> {
       isPlayer = false
     }
     return if (isPlayer) {
-      (player as Permissible).hasPermission("edgestitch.operator")
+      (player as Permissible).hasPermission("edgestitch-permissions.operator")
     } else {
       source.hasPermissionLevel(4)
     }
