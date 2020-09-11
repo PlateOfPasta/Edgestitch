@@ -25,7 +25,7 @@
 package com.github.plateofpasta.edgestitch.world
 
 import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
-import com.github.plateofpasta.edgestitch.chunk.ChunkUtil
+import com.github.plateofpasta.edgestitch.chunk.*
 import net.minecraft.util.Nameable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
@@ -110,7 +110,7 @@ open class EdgestitchWorld(protected val impl: World) {
    */
   fun regenerateChunk(chunk: ChunkPos): Boolean {
     try {
-      ChunkUtil.regenerateChunk(impl, chunk)
+      regenerateChunk(impl, chunk)
     } catch (e: Exception) {
       return false
     }

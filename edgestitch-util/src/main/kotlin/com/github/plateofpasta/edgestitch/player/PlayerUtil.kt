@@ -24,6 +24,7 @@
 
 package com.github.plateofpasta.edgestitch.player
 
+import com.github.plateofpasta.edgestitch.world.EdgestitchLocation
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.server.MinecraftServer
