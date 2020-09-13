@@ -24,9 +24,7 @@
 
 package com.github.plateofpasta.edgestitch.player
 
-import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
 import com.github.plateofpasta.edgestitch.mixin.MixinAccessorPlayerManager
-import com.github.plateofpasta.edgestitch.world.EdgestitchLocation
 import io.netty.buffer.Unpooled
 import java.io.IOException
 import net.fabricmc.api.EnvType

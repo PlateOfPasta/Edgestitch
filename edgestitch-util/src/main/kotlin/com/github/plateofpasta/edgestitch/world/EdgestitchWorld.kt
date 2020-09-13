@@ -24,8 +24,8 @@
 
 package com.github.plateofpasta.edgestitch.world
 
-import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
 import com.github.plateofpasta.edgestitch.chunk.*
+import net.minecraft.block.BlockState
 import net.minecraft.util.Nameable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
@@ -41,23 +41,23 @@ open class EdgestitchWorld(protected val impl: World) {
     get() = impl.height
 
   /**
-   * Gets the block at the block position.
+   * Gets the block state at the block position.
    *
    * @param blockPos Position of the target block.
-   * @return Target block.
+   * @return Target block state.
    */
-  fun getBlock(blockPos: BlockPos?): EdgestitchBlock {
-    return EdgestitchBlock(impl.getBlockState(blockPos))
+  fun getBlockState(blockPos: BlockPos?): BlockState {
+    return impl.getBlockState(blockPos)
   }
 
   /**
-   * Gets the block at the 3D vector location.
+   * Gets the block state at the block position.
    *
    * @param blockVec3D 3D vector position.
-   * @return Target block.
+   * @return Target block state.
    */
-  fun getBlock(blockVec3D: Vec3d?): EdgestitchBlock {
-    return EdgestitchBlock(impl.getBlockState(BlockPos(blockVec3D)))
+  fun getBlockState(blockVec3D: Vec3d?): BlockState {
+    return this.getBlockState(BlockPos(blockVec3D))
   }
 
   /**

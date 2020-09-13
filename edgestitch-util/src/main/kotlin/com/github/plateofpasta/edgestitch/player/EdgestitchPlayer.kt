@@ -24,20 +24,15 @@
 
 package com.github.plateofpasta.edgestitch.player
 
-import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation
 import com.github.plateofpasta.edgestitch.world.EdgestitchWorld
-import io.netty.buffer.Unpooled
-import java.io.IOException
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry
+import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.network.PacketByteBuf
-import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.LiteralText
 import net.minecraft.text.MutableText
 import net.minecraft.text.Style
 import net.minecraft.util.Formatting
-import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 
 /** Abstracts Minecraft primitive [PlayerEntity]. */
@@ -107,19 +102,7 @@ open class EdgestitchPlayer(protected val player: PlayerEntity) {
    * @param block What the fake block should look like.
    * @param coord3D Position in the player's current world to change.
    */
-  fun sendFakeBlock(block: EdgestitchBlock, coord3D: Vec3d?) {
-    // Construct the packet with a buffer so we can specific the block state at the location.
-    val packet = BlockUpdateS2CPacket()
-    val packetBuf = PacketByteBuf(Unpooled.buffer())
-    packetBuf.writeBlockPos(BlockPos(coord3D))
-    packetBuf.writeVarInt(block.blockStateVarInt)
-    try {
-      // "Fill" the packet with our info.
-      packet.read(packetBuf)
-    } catch (e: IOException) {
-      return
-    }
-    // Fabric network API.
-    ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, packet)
+  fun sendFakeBlock(block: BlockState, coord3D: Vec3d?) {
+    (player as ServerPlayerEntity).sendFakeBlock(block, coord3D)
   }
 }

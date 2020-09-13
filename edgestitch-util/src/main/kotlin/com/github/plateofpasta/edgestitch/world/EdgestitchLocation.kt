@@ -24,7 +24,7 @@
 
 package com.github.plateofpasta.edgestitch.world
 
-import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
+import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
@@ -41,8 +41,8 @@ open class EdgestitchLocation(val world: EdgestitchWorld, val blockPos: BlockPos
     get() = blockPos.y
   val z: Int
     get() = blockPos.z
-  val block: EdgestitchBlock
-    get() = world.getBlock(blockPos)
+  val blockState: BlockState
+    get() = world.getBlockState(blockPos)
 
   /**
    * Coordinate based constructor.
