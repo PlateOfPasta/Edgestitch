@@ -44,7 +44,8 @@ fun initCommands() {
           .then(
               CommandManager.literal(Add.NAMESPACE)
                   .then(
-                      CommandManager.argument(Add.ARG0_NAMESPACE, EntityArgumentType.player())
+                      CommandManager.argument(Add.ARG0_NAMESPACE, StringArgumentType.string())
+                          .suggests(PlayerNameSuggestions())
                           .then(
                               CommandManager.argument(
                                       Add.ARG1_NAMESPACE, StringArgumentType.string())
@@ -54,7 +55,8 @@ fun initCommands() {
           .then(
               CommandManager.literal(Remove.NAMESPACE)
                   .then(
-                      CommandManager.argument(Remove.ARG0_NAMESPACE, EntityArgumentType.player())
+                      CommandManager.argument(Remove.ARG0_NAMESPACE, StringArgumentType.string())
+                          .suggests(PlayerNameSuggestions())
                           .then(
                               CommandManager.argument(
                                       Remove.ARG1_NAMESPACE, StringArgumentType.string())

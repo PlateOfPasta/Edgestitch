@@ -5,6 +5,7 @@
   "mixins": [
   ],
   "server": [
+    "MixinAccessorPlayerManager",
     "MixinAccessorServerChunkManager",
     "MixinAccessorTACS",
     "MixinWorld"

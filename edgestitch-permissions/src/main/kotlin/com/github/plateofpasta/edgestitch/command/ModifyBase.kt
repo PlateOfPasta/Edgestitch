@@ -26,6 +26,10 @@ package com.github.plateofpasta.edgestitch.command
 
 import com.github.plateofpasta.edgestitch.EdgestitchPermissions
 import com.github.plateofpasta.edgestitch.permission.Permissible
+import com.github.plateofpasta.edgestitch.player.resolvePlayer
+import com.github.plateofpasta.edgestitch.player.savePlayerData
+import com.github.plateofpasta.edgestitch.util.*
+import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.exceptions.CommandSyntaxException
 import net.minecraft.command.argument.EntityArgumentType
@@ -54,8 +58,9 @@ interface ModifyBase {
       operationName: String
   ): Int {
     val source = context.source
-    val targetPlayer = EntityArgumentType.getPlayer(context, arg0_namespace)
+    val targetPlayerName = StringArgumentType.getString(context, arg0_namespace)
     val qualifiedName = context.getArgument(arg1_namespace, String::class.java)
+    val targetPlayer = resolvePlayer(source.minecraftServer, targetPlayerName)
     if (null == targetPlayer) {
       source.sendError(LiteralText("Specified player could not be resolved."))
       return -1
@@ -80,6 +85,8 @@ interface ModifyBase {
     if ((targetPlayer as Permissible).modifyMethod(qualifiedName)) {
       source.sendFeedback(
           LiteralText(String.format("Modified permission %s", qualifiedName)), false)
+      // Since we've modified the target player's NBT data, ensure it is saved.
+      savePlayerData(source.minecraftServer, targetPlayer)
     } else {
       source.sendError(
           LiteralText(String.format("Cannot %s the permission more than once", operationName)))

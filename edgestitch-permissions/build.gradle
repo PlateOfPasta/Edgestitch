@@ -1,6 +1,7 @@
 apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
 
 dependencies {
+    api project(":edgestitch-util")
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${rootProject.cardinal_version}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${rootProject.cardinal_version}"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${rootProject.cardinal_version}"

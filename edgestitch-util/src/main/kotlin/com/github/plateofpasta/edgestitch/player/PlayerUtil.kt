@@ -25,6 +25,7 @@
 package com.github.plateofpasta.edgestitch.player
 
 import com.github.plateofpasta.edgestitch.block.EdgestitchBlock
+import com.github.plateofpasta.edgestitch.mixin.MixinAccessorPlayerManager
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation
 import io.netty.buffer.Unpooled
 import java.io.IOException
@@ -67,6 +68,17 @@ fun resolvePlayer(server: MinecraftServer, playerName: String): ServerPlayerEnti
   player = playerManager.createPlayer(profile) ?: return null
   val tag = playerManager.loadPlayerData(player) ?: return null
   return player
+}
+
+/**
+ * Uses the server's [net.minecraft.server.PlayerManager] to save the NBT data within the
+ * [ServerPlayerEntity] object.
+ * @param server Server to save the player data to.
+ * @param player Player to save.
+ */
+@Environment(EnvType.SERVER)
+fun savePlayerData(server: MinecraftServer, player: ServerPlayerEntity) {
+  (server.playerManager as MixinAccessorPlayerManager).invokeSavePlayerData(player)
 }
 
 /**
