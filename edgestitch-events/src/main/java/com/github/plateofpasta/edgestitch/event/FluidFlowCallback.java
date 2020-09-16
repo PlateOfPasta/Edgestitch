@@ -45,6 +45,7 @@ public interface FluidFlowCallback {
   Event<FluidFlowCallback> EVENT =
       EventFactory.createArrayBacked(
           FluidFlowCallback.class,
+          (world, blockPos, blockState, direction, fluidState) -> ActionResult.PASS,
           (listeners) ->
               (world, blockPos, blockState, direction, fluidState) -> {
                 for (FluidFlowCallback event : listeners) {
