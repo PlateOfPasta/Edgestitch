@@ -5,6 +5,7 @@
   "mixins": [
     "MixinAccessorProjectileEntity",
     "MixinBaseFluid",
+    "MixinHopperBlockEntity",
     "MixinPistonBlock",
     "MixinProjectileEntity",
     "MixinThrownEntity"
